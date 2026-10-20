@@ -1,0 +1,17 @@
+# Godot 4+ specific ignores
+
+# Arquivos de importação e cache do Godot 4.x
+.godot/
+/android/
+
+# Caso seja Godot 3.x
+.import/
+
+# Arquivos de exportação do jogo (se você gerar builds)
+*.import
+export_presets.cfg
+
+# Logs e arquivos de sistema
+*.log
+.DS_Store
+Thumbs.db
