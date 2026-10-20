@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cjkrujl5oebcc"]
+
+[ext_resource type="Script" uid="uid://dpqpei4sudj7o" path="res://scripts/moeda.gd" id="1_7wojt"]
+[ext_resource type="Texture2D" uid="uid://b350li3oa4lkw" path="res://coin.svg" id="1_bkig7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vwt8q"]
+radius = 33.01515
+
+[node name="Moeda" type="Area2D" unique_id=700332447 groups=["moedas_grupo"]]
+script = ExtResource("1_7wojt")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1950806263]
+position = Vector2(11.5, 11.5)
+scale = Vector2(0.07875001, 0.07875001)
+texture = ExtResource("1_bkig7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1351411050]
+position = Vector2(12, 11)
+shape = SubResource("CircleShape2D_vwt8q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

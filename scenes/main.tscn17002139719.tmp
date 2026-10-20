@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://cxho2id3deqta"]
+
+[ext_resource type="PackedScene" uid="uid://cdolnxrnv1aqf" path="res://scenes/player.tscn" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://yn8kpkr675nx" path="res://scripts/main.gd" id="1_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://dh7vb3rvv2iu8" path="res://icon.svg" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://cjkrujl5oebcc" path="res://scenes/moeda.tscn" id="3_sugp2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vwt8q"]
+bg_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ot3b4"]
+bg_color = Color(0, 0.3882353, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cdpwx"]
+size = Vector2(7681.875, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vwt8q"]
+size = Vector2(129, 130.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
+size = Vector2(129, 130.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
+size = Vector2(907, 130.5)
+
+[node name="Main" type="Node2D" unique_id=1525099690]
+script = ExtResource("1_jyhfs")
+
+[node name="Player" parent="." unique_id=572107118 instance=ExtResource("1_0wfyh")]
+position = Vector2(144, 531)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1724363020]
+
+[node name="BtnEsquerda" type="TouchScreenButton" parent="UI" unique_id=1628445055]
+visible = false
+position = Vector2(135, 21)
+texture_normal = ExtResource("2_sugp2")
+passby_press = true
+action = "mover_esquerda"
+
+[node name="BtnDireita" type="TouchScreenButton" parent="UI" unique_id=965536779]
+visible = false
+position = Vector2(273, 23)
+texture_normal = ExtResource("2_sugp2")
+passby_press = true
+action = "mover_direita"
+
+[node name="BtnPulo" type="TouchScreenButton" parent="UI" unique_id=887974219]
+visible = false
+position = Vector2(1121, 25)
+texture_normal = ExtResource("2_sugp2")
+passby_press = true
+action = "pular"
+
+[node name="TextoMoedas" type="Label" parent="UI" unique_id=891535761]
+offset_left = 594.0
+offset_top = 20.0
+offset_right = 751.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 32
+text = "Moedas: 0"
+
+[node name="BarraVida" type="ProgressBar" parent="UI" unique_id=1733573461]
+offset_left = 37.0
+offset_top = 38.0
+offset_right = 239.0
+offset_bottom = 65.0
+offset_transform_enabled = true
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_vwt8q")
+step = 0.1
+value = 100.0
+
+[node name="BarraMana" type="ProgressBar" parent="UI" unique_id=1355725343]
+offset_left = 266.0
+offset_top = 39.0
+offset_right = 468.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_ot3b4")
+step = 0.1
+value = 100.0
+
+[node name="Chao" type="StaticBody2D" parent="." unique_id=630166116]
+position = Vector2(633, 436)
+
+[node name="Sprite2D" type="Sprite2D" parent="Chao" unique_id=444020742]
+position = Vector2(3200, 300)
+scale = Vector2(60, 1)
+texture = ExtResource("2_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chao" unique_id=787855137]
+position = Vector2(3200, 300)
+shape = SubResource("RectangleShape2D_cdpwx")
+
+[node name="Bloco" type="StaticBody2D" parent="." unique_id=2067788722]
+position = Vector2(388, 36)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bloco" unique_id=1667399469]
+position = Vector2(280, 571)
+texture = ExtResource("2_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bloco" unique_id=1789234388]
+position = Vector2(279.5, 572.75)
+shape = SubResource("RectangleShape2D_vwt8q")
+
+[node name="Bloco2" type="StaticBody2D" parent="." unique_id=1373182201]
+position = Vector2(679, -145)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bloco2" unique_id=1729421406]
+position = Vector2(280, 571)
+texture = ExtResource("2_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bloco2" unique_id=1513210693]
+position = Vector2(279.5, 572.75)
+shape = SubResource("RectangleShape2D_0wfyh")
+
+[node name="Bloco3" type="StaticBody2D" parent="." unique_id=2037242207]
+position = Vector2(1001, -280)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bloco3" unique_id=1685665954]
+position = Vector2(667, 571)
+scale = Vector2(7.046875, 1)
+texture = ExtResource("2_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bloco3" unique_id=55035268]
+position = Vector2(668.5, 572.75)
+shape = SubResource("RectangleShape2D_sugp2")
+
+[node name="Bloco4" type="StaticBody2D" parent="." unique_id=392223183]
+position = Vector2(2136, -280)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bloco4" unique_id=19782619]
+position = Vector2(667, 391)
+scale = Vector2(7.046875, 1)
+texture = ExtResource("2_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bloco4" unique_id=1963350894]
+position = Vector2(668.5, 392.75)
+shape = SubResource("RectangleShape2D_sugp2")
+
+[node name="Bloco5" type="StaticBody2D" parent="." unique_id=1355127015]
+position = Vector2(3227, -280)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bloco5" unique_id=1354175122]
+position = Vector2(667, 195)
+scale = Vector2(7.046875, 1)
+texture = ExtResource("2_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bloco5" unique_id=1611386243]
+position = Vector2(668.5, 196.75)
+shape = SubResource("RectangleShape2D_sugp2")
+
+[node name="Moeda" parent="." unique_id=700332447 instance=ExtResource("3_sugp2")]
+position = Vector2(3692, -308)
+
+[node name="Moeda2" parent="." unique_id=1265996645 instance=ExtResource("3_sugp2")]
+position = Vector2(3916, -308)
+
+[node name="Moeda3" parent="." unique_id=265406097 instance=ExtResource("3_sugp2")]
+position = Vector2(4094, -308)
