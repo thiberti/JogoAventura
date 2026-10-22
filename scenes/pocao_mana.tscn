@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bofse4s7b3hbq"]
+
+[ext_resource type="PackedScene" uid="uid://bpvdjclxwmdei" path="res://scenes/pocao.tscn" id="1_ju316"]
+
+[node name="Pocao" unique_id=1920108883 instance=ExtResource("1_ju316")]
+modulate = Color(0, 0.16470589, 1, 1)
+tipo_pocao = "Mana"

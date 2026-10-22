@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://yn8kpkr675nx" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://dh7vb3rvv2iu8" path="res://icon.svg" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cjkrujl5oebcc" path="res://scenes/moeda.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bm23vpu8i3vym" path="res://scenes/inimigo.tscn" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://bpvdjclxwmdei" path="res://scenes/pocao.tscn" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://bofse4s7b3hbq" path="res://scenes/pocao_mana.tscn" id="7_o6xl0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vwt8q"]
 bg_color = Color(0, 1, 0, 1)
@@ -26,6 +29,12 @@ size = Vector2(129, 130.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
 size = Vector2(907, 130.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
+size = Vector2(213, 294)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
+size = Vector2(213, 169)
 
 [node name="Main" type="Node2D" unique_id=1525099690]
 script = ExtResource("1_jyhfs")
@@ -113,6 +122,18 @@ label_settings = SubResource("LabelSettings_vwt8q")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TextoPocaoVida" type="Label" parent="UI" unique_id=239737571]
+offset_left = 43.0
+offset_top = 97.0
+offset_right = 83.0
+offset_bottom = 120.0
+
+[node name="TextoPocaoMana" type="Label" parent="UI" unique_id=1205332247]
+offset_left = 59.0
+offset_top = 181.0
+offset_right = 99.0
+offset_bottom = 204.0
+
 [node name="Chao" type="StaticBody2D" parent="." unique_id=630166116]
 position = Vector2(633, 436)
 
@@ -183,11 +204,47 @@ texture = ExtResource("2_sugp2")
 position = Vector2(668.5, 196.75)
 shape = SubResource("RectangleShape2D_sugp2")
 
+[node name="Bloco6" type="StaticBody2D" parent="." unique_id=1025378170]
+position = Vector2(6521, 370)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bloco6" unique_id=1630459433]
+position = Vector2(1052.0001, 155)
+scale = Vector2(1.6874983, 2.2890625)
+texture = ExtResource("2_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bloco6" unique_id=1281539179]
+position = Vector2(1050.5, 154)
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="Bloco7" type="StaticBody2D" parent="." unique_id=1946628928]
+position = Vector2(3787, 370)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bloco7" unique_id=1031754686]
+position = Vector2(1052.0001, 215.25)
+scale = Vector2(1.6874983, 1.3476564)
+texture = ExtResource("2_sugp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bloco7" unique_id=1506901992]
+position = Vector2(1050.5, 213.5)
+shape = SubResource("RectangleShape2D_tbgi4")
+
 [node name="Moeda" parent="." unique_id=700332447 instance=ExtResource("3_sugp2")]
-position = Vector2(3692, -308)
+position = Vector2(2586, -150)
 
 [node name="Moeda2" parent="." unique_id=1265996645 instance=ExtResource("3_sugp2")]
-position = Vector2(3916, -308)
+position = Vector2(2810, -150)
 
 [node name="Moeda3" parent="." unique_id=265406097 instance=ExtResource("3_sugp2")]
-position = Vector2(4094, -308)
+position = Vector2(2988, -150)
+
+[node name="Inimigo" parent="." unique_id=2075015005 instance=ExtResource("5_tbgi4")]
+position = Vector2(1430, 609)
+
+[node name="Inimigo2" parent="." unique_id=627643349 instance=ExtResource("5_tbgi4")]
+position = Vector2(5643, 609)
+
+[node name="Pocao" parent="." unique_id=1920108883 instance=ExtResource("6_tefeu")]
+position = Vector2(677, 480)
+
+[node name="Pocao2" parent="." unique_id=1337870265 instance=ExtResource("7_o6xl0")]
+position = Vector2(965, 293)

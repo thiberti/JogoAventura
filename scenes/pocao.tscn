@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bpvdjclxwmdei"]
+
+[ext_resource type="Texture2D" uid="uid://vxyvosuwtwek" path="res://img/pocao.svg" id="1_fwsbe"]
+[ext_resource type="Script" uid="uid://bgv0h1mj6bogb" path="res://scripts/pocao.gd" id="1_w4aqe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vwt8q"]
+size = Vector2(40, 48)
+
+[node name="Pocao" type="Area2D" unique_id=1920108883]
+script = ExtResource("1_w4aqe")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2104326909]
+modulate = Color(0, 0.9764706, 0, 1)
+scale = Vector2(0.0625, 0.0625)
+texture = ExtResource("1_fwsbe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1860474306]
+shape = SubResource("RectangleShape2D_vwt8q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

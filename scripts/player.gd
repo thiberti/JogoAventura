@@ -5,7 +5,7 @@ extends CharacterBody2D
 
 # Atributos Modificáveis da Classe
 var SPEED: float = 300.0
-var JUMP_VELOCITY: float = -600.0
+var JUMP_VELOCITY: float = -700.0
 
 var vida_maxima: float = 100.0
 var vida_atual: float = 100.0
@@ -22,7 +22,11 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var cena_projetil = preload("res://scenes/projetil.tscn")
 
 func _ready():
-	# Configura os atributos conforme a classe definida
+	# Verifica se a variável global DadosJogo existe na cena e pega a classe escolhida
+	if get_node_or_null("/root/DadosJogo"):
+		classe_personagem = DadosJogo.classe_selecionada
+		
+	# Aplica os atributos da classe selecionada
 	aplicar_atributos_classe(classe_personagem)
 
 func aplicar_atributos_classe(nome_classe: String):
@@ -31,7 +35,7 @@ func aplicar_atributos_classe(nome_classe: String):
 			SPEED = 350.0            # Mais ágil
 			vida_maxima = 80.0       # Vida menor (glass cannon)
 			mana_maxima = 120.0
-			regen_vida = 1.0
+			regen_vida = 0.5
 			regen_mana = 3.0
 		"Mago":
 			SPEED = 280.0
@@ -40,7 +44,7 @@ func aplicar_atributos_classe(nome_classe: String):
 			regen_vida = 0.8
 			regen_mana = 8.0         # Regeneração de mana rápida
 		"Assassino":
-			SPEED = 420.0            # Muito rápido
+			SPEED = 500.0            # Muito rápido
 			vida_maxima = 90.0
 			mana_maxima = 100.0
 			regen_vida = 1.5
@@ -75,6 +79,9 @@ func _physics_process(delta):
 	var direction = Input.get_axis("mover_esquerda", "mover_direita")
 	if direction:
 		velocity.x = direction * SPEED
+		# Vira o Sprite para o lado correto do movimento
+		if has_node("Sprite2D"):
+			$Sprite2D.flip_h = (direction < 0)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
@@ -93,6 +100,24 @@ func _physics_process(delta):
 	# --- ATAQUE BÁSICO ---
 	if Input.is_action_just_pressed("ui_accept"): # Tecla Espaço / Enter
 		atacar()
+		
+# Dentro do _physics_process(delta):
+	# Atalhos para usar poções do inventário
+	if Input.is_key_pressed(KEY_1) or Input.is_physical_key_pressed(KEY_1):
+		usar_pocao_vida()
+		
+	if Input.is_key_pressed(KEY_2) or Input.is_physical_key_pressed(KEY_2):
+		usar_pocao_mana()
+
+func usar_pocao_vida():
+	if DadosJogo.pocoes_vida > 0 and vida_atual < vida_maxima:
+		DadosJogo.pocoes_vida -= 1
+		vida_atual = min(vida_atual + 40.0, vida_maxima)
+
+func usar_pocao_mana():
+	if DadosJogo.pocoes_mana > 0 and mana_atual < mana_maxima:
+		DadosJogo.pocoes_mana -= 1
+		mana_atual = min(mana_atual + 40.0, mana_maxima)
 
 func regenerar_recursos(delta):
 	if vida_atual < vida_maxima:
@@ -109,13 +134,59 @@ func gastar_mana(quantidade: float):
 	
 	
 func atacar():
+	# Ataque à Distância (Atirador / Mago)
 	if classe_personagem in ["Atirador", "Mago"]:
-		# Verifica se tem mana suficiente para atirar
 		var custo_mana = 10.0 if classe_personagem == "Atirador" else 25.0
+		
+		# Verifica se o jogador tem mana suficiente
 		if mana_atual >= custo_mana:
-			gastar_mana(custo_mana)
+			gastar_mana(custo_mana) # Dedução de mana garantida
+			
 			var proj = cena_projetil.instantiate()
 			proj.position = global_position
-			# Define a direção com base para onde o jogador está olhando (escala ou velocidade)
-			proj.direcao = -1.0 if $Sprite2D.flip_h else 1.0 if has_node("Sprite2D") else 1.0
+			
+			# Direção do disparo conforme o olhar do jogador
+			if has_node("Sprite2D") and $Sprite2D.flip_h:
+				proj.direcao = -1.0
+			else:
+				proj.direcao = 1.0
+				
 			get_parent().add_child(proj)
+			
+	# Ataque Corpo a Corpo (Assassino / Lutador)
+	elif classe_personagem in ["Assassino", "Lutador"]:
+		var custo_mana = 15.0 if classe_personagem == "Assassino" else 5.0
+		if mana_atual >= custo_mana:
+			gastar_mana(custo_mana)
+			executar_ataque_melee()
+
+func executar_ataque_melee():
+	# Inverte a posição do nó da AreaAtaque e o sprite do ataque
+	if has_node("Sprite2D") and $Sprite2D.flip_h:
+		$AreaAtaque.position.x = -abs($AreaAtaque.position.x)
+		if has_node("AreaAtaque/Sprite2D"):
+			$AreaAtaque/Sprite2D.flip_h = true
+	else:
+		$AreaAtaque.position.x = abs($AreaAtaque.position.x)
+		if has_node("AreaAtaque/Sprite2D"):
+			$AreaAtaque/Sprite2D.flip_h = false
+		
+	# Ativa colisão e exibe o sprite de ataque
+	$AreaAtaque.monitoring = true
+	if has_node("AreaAtaque/Sprite2D"):
+		$AreaAtaque/Sprite2D.visible = true
+	
+	# Janela do golpe (0.2s)
+	await get_tree().create_timer(0.2).timeout
+	
+	# Desativa colisão e oculta o sprite
+	$AreaAtaque.monitoring = false
+	if has_node("AreaAtaque/Sprite2D"):
+		$AreaAtaque/Sprite2D.visible = false
+
+# Função acionada quando a AreaAtaque acerta algo enquanto estiver ligada
+func _on_area_ataque_body_entered(body):
+	if body.name != "Player" and body.has_method("tomar_dano"):
+		# Define o dano com base na classe
+		var dano_melee = 35.0 if classe_personagem == "Assassino" else 25.0
+		body.tomar_dano(dano_melee)

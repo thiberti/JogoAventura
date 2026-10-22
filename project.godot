@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="JogoAventura"
-run/main_scene="uid://cxho2id3deqta"
+run/main_scene="uid://cbqqwxm0f4e2c"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+DadosJogo="*uid://hdgsl1plggv1"
 
 [display]
 
