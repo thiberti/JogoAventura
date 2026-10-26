@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bm23vpu8i3vym"]
 
 [ext_resource type="Script" uid="uid://ihcf5u6ydcgy" path="res://scripts/inimigo.gd" id="1_61lki"]
-[ext_resource type="Texture2D" uid="uid://b0wcsfpx2sqw1" path="res://img/inimigosvg.svg" id="1_pt50e"]
+[ext_resource type="Texture2D" uid="uid://dol5ccu2cpl6m" path="res://img/freeza.png" id="2_61lki"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwt8q"]
 size = Vector2(170, 115)
@@ -9,12 +9,16 @@ size = Vector2(170, 115)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ot3b4"]
 size = Vector2(220, 154)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fd345"]
+size = Vector2(1019, 239)
+
 [node name="Inimigo" type="CharacterBody2D" unique_id=2075015005]
 script = ExtResource("1_61lki")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=425968818]
-scale = Vector2(0.2075, 0.20749997)
-texture = ExtResource("1_pt50e")
+position = Vector2(0, -4.0000005)
+scale = Vector2(0.06479485, 0.064794816)
+texture = ExtResource("2_61lki")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=132298437]
 position = Vector2(0, -4.5)
@@ -25,4 +29,12 @@ shape = SubResource("RectangleShape2D_vwt8q")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaDano" unique_id=431828299]
 shape = SubResource("RectangleShape2D_ot3b4")
 
+[node name="AreaVisao" type="Area2D" parent="." unique_id=1435382974]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaVisao" unique_id=514938474]
+position = Vector2(1.5, -42.5)
+shape = SubResource("RectangleShape2D_fd345")
+
 [connection signal="body_entered" from="AreaDano" to="." method="_on_area_dano_body_entered"]
+[connection signal="body_entered" from="AreaVisao" to="." method="_on_area_visao_body_entered"]
+[connection signal="body_exited" from="AreaVisao" to="." method="_on_area_visao_body_exited"]

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cl0odldnfehtx"]
+
+[ext_resource type="Texture2D" uid="uid://cafxx3te54dje" path="res://img/projetil.png" id="1_qtygk"]
+[ext_resource type="Script" uid="uid://c5j0twrnxqv7c" path="res://scripts/projetil_inimigo.gd" id="1_rx4f6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vwt8q"]
+size = Vector2(101, 67)
+
+[node name="ProjetilInimigo" type="Area2D" unique_id=842927342]
+script = ExtResource("1_rx4f6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1108517460]
+texture = ExtResource("1_qtygk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=984869515]
+position = Vector2(-0.5, -2.5)
+shape = SubResource("RectangleShape2D_vwt8q")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
